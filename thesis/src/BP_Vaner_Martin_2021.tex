@@ -1,0 +1,117 @@
+
+\documentclass[thesis=B,czech]{FITthesis}[2019/12/23]
+
+\usepackage[utf8]{inputenc} % LaTeX source encoded as UTF-8
+\usepackage{dirtree} %directory tree visualisation
+\usepackage{xevlna}
+\usepackage{float}
+\usepackage[figuresright]{rotating}
+
+\usepackage[style=iso-numeric]{biblatex}
+\addbibresource{mybibliographyfile.bib}
+
+\usepackage{minted}
+\counterwithin{listing}{chapter}
+\renewcommand{\listingscaption}{Ukázka kódu}
+\renewcommand{\listoflistingscaption}{Seznam ukázek kódu}
+
+
+\department{Katedra softwarového inženýrství}
+\title{Webový informační systém Elektronická třídní kniha}
+\authorGN{Martin} %(křestní) jméno (jména) autora
+\authorFN{Vaner} %příjmení autora
+\authorWithDegrees{Martin Vaner} %jméno autora včetně současných akademických titulů
+\author{Martin Vaner} %jméno autora bez akademických titulů
+\supervisor{Ing. Marek Suchánek}
+
+\placeForDeclarationOfAuthenticity{V~Praze}
+\declarationOfAuthenticityOption{4} %volba Prohlášení (číslo 1-6)
+
+\acknowledgements{Chtěl bych poděkovat Ing. Marku Suchánkovi za odborné vedení práce a za poskytnuté rady. Dále bych rád poděkoval rodině za podporu po celou dobu studia.}
+
+\abstractCS{Tato bakalářská práce se zabývá tvorbou informačního systému pro správu třídních knih. Výsledkem je open-source informační systém v podobě webové aplikace, který dokáže nahradit papírové třídní knihy a pomáhá tak snižovat administrativní zátěž během dálkové výuky. Součástí práce je analýza problematiky a požadavků na systém, rešerše existujících řešení, návrh systému, implementace a testování, a zhodnocení přínosů použití aplikace a odhad nákladů. Vzniklý systém, u kterého škola platí pouze za provoz, případně údržbu, je alternativou ke komerčním projektům na trhu. Aplikace je vytvořena pomocí jazyka C\# a ASP.NET Core MVC frameworku, který je postaven na platformě .NET Core. Pro přístup k datům je použit Entity Framework Core. 
+}
+\abstractEN{This bachelor thesis deals with the creation of an information system for management of classbooks. The result of this thesis is an open-source information system in the form of a web application that can fully substitute classical paper classbooks and thus helps to reduce administrative burden during the period of distance learning. The thesis contains analysis of the issue and requirements for the system, analysis of existing solutions, design of the system, implementation and testing, evaluation of the benefits of using the application and cost estimation. The system, in which the school pays only for operation or maintenance, is an alternative to commercial projects on the market. Application is created on .NET Core platform using C\# language and ASP.NET Core MVC framework. For data access is used Entity Framework Core.
+}
+
+\keywordsCS{informační systém, webová aplikace, elektronická třídní kniha, správa třídních knih, návrh a implementace informačního systému, .NET Core, C\#, Entity Framework Core
+}
+\keywordsEN{information system, web application, electronic classbook, classbook management, information system design and implementation, .NET Core, C\#, Entity Framework Core
+}
+
+\begin{document}
+
+\include{content/introduction}
+
+\chapter{Cíl práce}
+\input{content/goals}
+
+\chapter{Analýza}
+\input{content/analysis}
+
+\chapter{Rešerše existujících aplikací}
+\input{content/research}
+
+\chapter{Návrh}
+\input{content/design}
+
+\chapter{Realizace}
+\input{content/implementation-and-testing}
+
+\chapter{Zhodnocení vytvořeného systému}
+\input{content/evaluation}
+
+\include{content/conclusion}
+
+\emergencystretch=1em
+\printbibliography
+
+\appendix
+
+\chapter{Seznam použitých zkratek}
+% \printglossaries
+\begin{description}
+	\item[UML] Unified Modeling Language
+	\item[GDPR] General Data Protection Regulation
+	\item[DPH] Daň z přidané hodnoty
+	\item[PDF] Portable Document Format
+	\item[MVC] Model-view-controller
+	\item[HTML] Hypertext Markup Language
+	\item[CSS] Cascading Style Sheets
+	\item[IoT] Internet of Things
+	\item[IoC] Inversion of Control
+	\item[URL] Uniform Resource Locator
+	\item[ORM] Object Relational Mapping
+	\item[LINQ] Language Integrated Query
+	\item[SQL] Structured Query Language
+	\item[MD] Man-day
+	\item[VPS] Virtual Private Server
+\end{description}
+
+\chapter{Diagramy}
+\include{content/diagrams}
+
+\include{content/app_samples}
+
+\chapter{Obsah přiložené SD karty}
+
+
+\begin{figure}
+	\dirtree{%
+		.1 readme.md\DTcomment{stručný popis obsahu SD karty}.
+		.1 publish \DTcomment{adresář s verzemi aplikace}.
+		.2 MSSQL \DTcomment{verze aplikace pro Microsoft SQL Server databázi}.
+		.2 PostgreSQL \DTcomment{verze aplikace pro PostgreSQL databázi}.
+		.2 deployment.pdf \DTcomment{instalační příručka}.
+		.1 ElectronicClassbook \DTcomment{zdrojové kódy implementace}.
+		.1 thesis\DTcomment{text práce}.
+		.2 src \DTcomment{zdrojová forma práce ve formátu \LaTeX{}}.
+		.2 BP\_Vaner\_Martin\_2021.pdf\DTcomment{text práce ve formátu PDF}.
+		.2 assignment.pdf\DTcomment{zadání práce ve formátu PDF}.
+		.1 samples \DTcomment{ukázky aplikace}.
+		.2 screenshots \DTcomment{obrazové ukázky aplikace}.
+		.2 video.mp4 \DTcomment{komentovaná video ukázka aplikace}.
+	}
+\end{figure}
+
+\end{document}

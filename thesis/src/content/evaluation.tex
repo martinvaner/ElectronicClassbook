@@ -1,0 +1,162 @@
+Tato kapitola je věnována zhodnocení vzniklého systému. V první podkapitole jsou zhodnoceny přínosy vytvořeného informačního systému. Dále následuje vyčíslení nákladů spojených na vývoj a provoz systému. V poslední části jsou uvedeny možnosti budoucího rozšíření systému.
+
+\section{Přínosy použití systému}
+
+\subsection{Zlepšení procesů}
+Použitím vzniklého informačního systému dojde k zefektivnění dvou zásadních procesů v rámci práce s třídní knihou. Jedná se o proces zápisu informací o proběhnuté hodině a proces omlouvání absence žáků.
+
+U procesu zápisu informací o proběhnuté hodině je největším přínosem fakt, že třídní kniha je vždy přístupná a odpadá tedy její hledání v případě ztráty.
+
+U omlouvání absence žáků je největší výhodou to, že odpadl student jako účastník tohoto procesu. To řeší hned několik problémů. Zaprvé, že student nemůže absenci zatajit a rodič se o ní dozví vždy včas. Zadruhé, že student již nemá téměř žádnou šanci omluvenku zfalšovat, protože omlouvání absence probíhá z účtu rodiče. Jedinou možností je, že by se student dozvěděl heslo, kterým se rodič přihlašuje do systému nebo že by se rodič zapomněl odhlásit. Obě možnosti jsou však problémem rodičů a nedají se z hlediska informačního systému rozumně řešit. Třetí problém, který vyřazení studenta z procesu řeší je ten, že student již nebude moci záměrně zkracovat čas vyučování řešením administrativních záležitostí s třídním učitelem. Nebo naopak, že student nebude muset řešit doručování omluvenek v rámci času určeného na přestávku.
+
+\subsection{Práce odkudkoliv}
+Přínosem použití informačního systému je fakt, že lze do systému přistupovat odkudkoliv. To je zvláště přínosné při distanční výuce, kdy zkrátka není možné, aby mělo více učitelů, vyučujících z různých míst, přístup k jedné papírové třídní knize.
+
+Tato výhoda také souvisí s tím, že třídní knihu může používat více uživatelů naráz. Například třídní učitel může řešit omluvenky od rodičů a zároveň učitel může zapsat informace o právě probíhající hodině.
+
+\subsection{Archivace}
+Dalším přínosem systému je snadná archivace. Aplikace dokáže vyexportovat třídní knihu do formátu PDF. Poté má škola dvě možnosti, buď soubor vytiskne a bude archivovat v papírové podobě, nebo PDF souboru obstará elektronický podpis nebo elektronické časové razítko a bude archivovat v digitální podobě (na fyzickém nosiči). Archivací v digitální podobě odpadají škole náklady spojené s tiskem a nejsou potřeba velké prostory k uložení. Na druhou stranu je potřeba nakoupit hardware, na kterém budou data uložena.
+
+\subsection{Opravné záznamy}
+Opravné zápisy jsou dalším přínosem informačního systému. V případě potřeby, aplikace umožňuje příslušným uživatelům upravit zápis o proběhnuté hodině v třídní knize. Pokud například třídní učitel zjistí při kontrole, že něco není v pořádku, není problém danou chybu opravit.
+
+\section{Náklady na systém}
+
+\subsection{Náklady na vývoj}
+Náklady na vývoj se primárně odvíjí od stráveného času nad tvorbou informačního systému. Do výpočtu je zahrnut jak čas na realizaci, tedy implementaci a testování systému, tak i čas strávený nad analýzou a sběrem požadavků, rešerší již existujících aplikací a návrhem systému. V tabulce \ref{tab:development} lze vidět hrubý odhad stráveného času nad jednotlivými částmi.
+Zkratka MD znamená \uv{man--day} neboli \uv{člověkoden} a označuje pracovní čas jedné osoby za jeden pracovní den, typicky 8 hodin. \cite{manday}
+\clearpage
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+         Analýza & 7 MD \\
+         \hline
+         Rešerše & 5 MD \\
+         \hline
+         Návrh & 10 MD \\
+         \hline
+         Implementace & 27 MD \\
+         \hline
+         Testování & 3 MD \\
+         \hline
+         \hline
+         Celkem & 52 MD = 416 hodin \\
+         \hline
+    \end{tabular}
+    \caption{Odhad času na vývoj systému}
+    \label{tab:development}
+\end{table}
+
+Cena za vývoj softwaru je podle \cite{md-benchmark} 6 000 Kč/MD. Jedná se o průměrnou cenu kontraktora, který vyvíjí v prostředí .NET, ve třetím kvartálu roku 2020 \cite{md-benchmark}. Po vynásobení průměrné ceny za MD s počtem strávených MD dostáváme částku 312 000 Kč, což je výsledná cena za vývoj. Cena nezahrnuje další výdaje spojené s vývojem, například licence k vývojářským nástrojům a operačnímu systému, koupi počítače, apod.
+
+\subsection{Náklady na zavedení a provoz}
+Vzniklý informační systém musí být provozován na serveru, který umí zpracovávat HTTP požadavky. V tomto ohledu má škola několik možností.
+
+\subsubsection*{Sdílený server}
+Pronájem sdíleného serveru je nejlevnější možnost pro provoz aplikace. Aplikace je umístěna na server, kde sdílí prostředky (RAM, CPU) s dalšími hostovanými aplikacemi \cite{webhosting-difference}.
+
+Výhodou sdíleného serveru je především cena. Nevýhodou je malá přidělená operační paměť a fakt, že rychlost aplikace mohou ovlivňovat ostatní hostované webové stránky.
+
+Vzhledem k omezeným přiřazeným zdrojům, není tento způsob provozu vzniklé aplikace doporučen.
+
+\subsubsection*{Virtuální privátní server}
+V případě virtuálního privátního serveru (VPS) je jeden fyzický server rozdělen na několik virtuálních, které poté poskytovatel pronajímá \cite{webhosting-difference}. Je zde garantována velikost RAM, počet CPU, velikost úložiště, apod.
+
+Jedná se o kompromis mezi sdíleným a dedikovaným serverem, jak z pohledu ceny a výkonu, tak z pohledu kontroly nad serverem.
+
+\subsubsection*{Dedikovaný server}
+V tomto případě se jedná o pronájem celého fyzického serveru. Nájemce má správcovský přístup na server a může kontrolovat vše od operačního systému po zabezpečení \cite{webhosting-difference}.
+
+Jelikož se jedná o pronájem celého serveru, cena bude vyšší než u předchozích řešení. Zároveň je pro správu serveru potřeba technická znalost. 
+
+\subsubsection*{Cloud}
+V případě cloudu není aplikace provozována pouze na jednom serveru, ale na síti propojených virtuálních a fyzických serverů \cite{what-is-cloud}.
+
+Výhodou je, že nájemce platí jen za ten výkon a úložiště, které skutečně využije. Další výhodou je snadná škálovatelnost aplikace. Nevýhodou je, že výpočet ceny závisí na mnoha faktorech, které se mohou každý měsíc lišit a může se tak lišit i měsíční cena za pronájem \cite{cloud-cons}.
+
+\subsubsection*{Fyzický server}
+Poslední možností je pořízení fyzického serveru, který bude škola provozovat sama. 
+Výhodou je, že má škola absolutní kontrolu nad provozem aplikace, daty, konfigurací serveru, apod. Nevýhodou jsou náklady na zavedení a provoz. Škola musí zakoupit (v případě, že server již nevlastní) server, případně licence na operační systém a databázi. Nastavení serveru musí provést technik. Další náklady vznikají za spotřebovanou elektřinu, zabezpečení serverovny, apod.
+
+Toto řešení je vhodné především pro technicky zaměřené školy, které již server vlastní, mají vybudované zázemí pro provoz serveru a zaměstnávají technicky zaměřené osoby. Dále je toto řešení vhodné pro velké školy, které jsou ochotné investovat do provozu informačního systému a chtějí mít absolutní kontrolu nad systémem.
+
+\subsubsection{Výběr způsobu provozu}
+Výběr provozu aplikace z výše uvedených možností záleží především na velikosti školy, tedy na potřebné velikosti úložiště a potřebném výkonu serveru.
+
+Ve výběru vhodného způsobu provozu byl zohledněn počet uživatelů systému a jejich vliv na úložiště a paměť RAM. Dále byly zohledněny minimální požadavky zvolených technologií na systém. Vzhledem k tomu, že MSSQL databáze požaduje pro operační systém Linux alespoň dvoujádrový procesor \cite{sqlserver-linux-req}, nebylo možné zvolit levnější řešení, i když by to počet uživatelů dovoloval. Vybrané řešení lze vidět v tabulce \ref{tab:service-prices}. Řešení je pro školy s počtem žáků do 250.
+\clearpage
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|p{6cm}|c|}
+        \hline
+         Položka & Cena (bez DPH) \\
+         \hline
+         \hline
+         VPS Large od společnosti FORPSI (INTERNET CZ, a.s.) \cite{linux-server} & 300 Kč/měsíc \\
+         \hline
+         CZ doména & 149 Kč/rok \\
+         \hline
+         SSL certifikát & 800 Kč/rok \\
+         \hline
+         Správa & 5 600 Kč/rok \\
+         \hline
+         \hline
+         Celkem bez správy & 4 549 Kč/rok \\
+         \hline
+         Celkem se správou & 10 149 Kč/rok \\
+         \hline
+    \end{tabular}
+    \caption{Náklady na provoz informačního systému}
+    \label{tab:service-prices}
+\end{table}
+
+Správu serveru lze dělat svépomocí (vyžaduje technickou znalost) nebo si zaplatit odborníka. V případě správy serveru třetí stranou se roční rozsah prací odhaduje na 1 MD, což podle \cite{md-benchmark} odpovídá 5 600 Kč.
+
+
+\subsection{Srovnání s konkurencí}
+Vzniklý informační systém nabízí zajímavou alternativu ke komerčním řešením na trhu. Jedná se o open-source systém, kde zákazník platí pouze za provoz aplikace, případně údržbu. Díky rozdělení systému na moduly umožňuje snadné rozšíření o další funkce. V tabulce \ref{tab:prices-comparasion} lze vidět srovnání ročních nákladů aplikací uvedených v rešeršní části se vzniklým informačním systémem (ceny jsou uvedeny pro školy s počtem žáků do 250).
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+         Řešení & Cena (bez DPH) \\
+         \hline
+         \hline
+         Vytvořená aplikace v rámci BP (bez správy) & 4 549 Kč/rok \\
+         \hline
+         Vytvořená aplikace v rámci BP (se správou) & 10 149 Kč/rok \\
+         \hline
+         Etřídnice & 6 000 Kč/rok \\
+         \hline
+         Bakaláři & neuvedeno \\
+         \hline
+         Edookit & 29 636 -- 59 272 Kč/rok \\
+         \hline
+    \end{tabular}
+    \caption{Srovnání ročních nákladů na provoz jednotlivých systémů}
+    \label{tab:prices-comparasion}
+\end{table}
+
+
+\section{Možnosti rozšíření}
+Vzniklý informační systém obsahuje základní funkcionalitu pro správu třídních knih. Díky návrhu architektury pro snadnou rozšiřitelnost však může v budoucnu řešit další problémy spojené se školní agendou.
+
+Následující návrhy nových modulů mohou představovat zajímavé možnosti dalšího rozšíření.
+
+\subsubsection*{Žákovská knížka}
+Tento modul by sloužil k přehledu známek, které studenti dostávají. Ke známkám by měli přístup učitelé, rodiče i žáci. Rodiče by tak byli vždy informování o klasifikaci svých dětí.
+
+\subsubsection*{Platby}
+Modul platby by sloužil pro veškeré úhrady spojené se studiem dětí. Rodiče by měli možnost platit tímto způsobem například sportovní kurzy, výlety, příspěvky škole, apod. Odpadla by nutnost řešit tyto záležitosti na třídních schůzkách, přes e-mail či prostřednictvím žáka.
+
+\subsubsection*{Rozvrhy}
+Tento modul by sloužil pro tvorbu a zobrazení rozvrhu dané třídy. Žáci a rodiče by byli vždy informováni o probíhaných hodinách, změnách v rozvrhu, apod. Tento modul by také mohl sloužit pro správu tématických okruhů. Učitelé by si tak při zápisu do třídní knihy mohli místo psaní tématu dané hodiny pouze vybrat ze seznamu okruhů.
+
+\subsubsection*{}
+Rozšíření o nový modul se provede vytvořením nového projektu v aplikační vrstvě, vytvořením nového repository v datové vrstvě a vytvořením nové oblasti v prezentační vrstvě. Dále je nutné přidat odkaz do hlavního navigačního menu, který bude sloužit pro přechod do nového modulu. Po přidání modulu je nutné aplikaci znovu publikovat (připravit na nasazení).
+
+

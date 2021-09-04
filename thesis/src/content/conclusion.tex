@@ -1,0 +1,16 @@
+\begin{conclusion}
+Cílem této práce bylo navrhnout a implementovat informační systém, který podporuje správu třídních knih. Tvorba systému měla být v souladu s metodami softwarového inženýrství a měla zahrnovat analýzu problémové domény, rešerši existujících řešení, návrh systému, implementaci a testování, zhodnocení přínosů použití systému a odhadnutí nákladů na zavedení a provoz.
+
+Vývoj aplikace začal analýzou problémové domény, kde hlavním výstupem je stanovení funkčních a nefunkčních požadavků na systém. Ty se podařilo sestavit na základě konzultace s učitelkou vyučující na základní škole. V analýze byly také identifikovány klíčové procesy, které byly namodelovány jak s použitím informačního systému, tak bez něj, a vytvořen doménový model, který popisuje jednotlivé entity v problémové doméně a pomáhá pochopit vztahy mezi nimi.
+
+Následovala stručná rešerše, kde byly popsány již existující řešení elektronizace třídních knih. Na konci bylo provedeno shrnutí kladů a záporů jednotlivých systémů.
+
+Návrh je věnován architektuře systému, případům užití a tvorbě základního uživatelského rozhraní aplikace. Systém je postaven na třívrstvé architektuře, která rozděluje aplikaci na prezentační, aplikační a datovou vrstvu. Pro další strukturování zdrojového kódu je v prezentační vrstvě použit návrhový vzor MVC. Jednotlivé funkční celky jsou rozděleny do samostatných modulů, což usnadňuje budoucí vývoj. Případy užití, které představují průchody aplikací, byly sestaveny na základě stanovených požadavků.
+
+Výsledný systém má podobu webové aplikace a je vytvořen na platformě .NET Core, která je požadována v zadání práce. Pro vývoj byl použit framework ASP.NET Core MVC, který je určen pro tvorbu webových aplikací. Pro práci s databází byl použit Entity Framework Core, který umožňuje pracovat s tabulkami databáze jako s objekty. Vzhled uživatelského rozhraní byl tvořen za pomoci frameworku Bootstrap. Aplikace byla řádně otestována pomocí testovacích scénářů vycházejících z případů užití.
+\newline
+
+Po dokončení implementace a testování byly zhodnoceny přínosy použití systému a byly odhadnuty náklady na zavedení a provoz. Použití systému umožňuje práci odkudkoliv, což pomáhá řešit administrativní zátěž dálkové výuky, zjednodušuje archivaci třídních knih či zefektivňuje identifikované procesy. Odhad nákladů ukázal, že výsledný systém může mít pro školy zajímavé provozní náklady, avšak započítá-li se podpora aplikace, nemusí se jednat o nejlevnější řešení. 
+
+Všechny stanovené cíle se podařilo úspěšně splnit, systém je připraven k případnému provozu a díky tomu, že je vyvíjen jako open-source projekt, může vývoj dalších funkcionalit probíhat nezávisle na autorovi práce.
+\end{conclusion}
