@@ -1,0 +1,54 @@
+﻿@model Web.Areas.Classbook.Models.ExportClassbookViewModel
+
+@{
+    ViewData["Title"] = "ExportClassbook";
+    Layout = "_Layout";
+}
+
+<h3>Třídní knihy</h3>
+<br />
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Tisk třídní knihy</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="ExportClassbook" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="ClassName" class="control-label"></label>
+                            <label asp-for="ClassName" class="form-control">@Model.ClassName</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="From" class="control-label"></label>
+                            <input type="date" asp-for="From" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="To" class="control-label"></label>
+                            <input type="date" asp-for="To" class="form-control" />
+                        </div>
+                    </div>
+                    <div>
+                        
+                        <div class="form-group d-inline float-right">
+                            @if (ViewBag.ShowPrintBtn)
+                            {
+                                <button type="submit" class="btn btn-primary mb-2" formtarget="_blank">Vytisknout</button>
+                            }
+                        </div>
+                        <div class="d-inline">
+                            <a asp-action="Index">Zpět</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

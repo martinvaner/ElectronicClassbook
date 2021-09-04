@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="report container">
+    <h4>@ViewBag.FullName - @ViewBag.ClassName</h4>
+    <br />
+
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Reports" asp-controller="Report" asp-action="ShowAbsences" asp-route-studentId="@ViewBag.StudentId">Absence</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Reports" asp-controller="Report" asp-action="ShowHomeworks" asp-route-studentId="@ViewBag.StudentId">Domácí úkoly</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Reports" asp-controller="Report" asp-action="ShowHomeSchoolNotes" asp-route-studentId="@ViewBag.StudentId">Poznámky o chování</a>
+        </li>
+    </ul>
+    <div role="main" class="pb-3">
+        @RenderBody()
+    </div>
+</div>

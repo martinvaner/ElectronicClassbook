@@ -1,0 +1,373 @@
+﻿@model Web.Areas.Classbook.Models.PrintClassbookViewModel
+
+@{
+
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+
+
+<body>
+
+    @* Úvodní strana *@
+
+
+    <h2 class="text-center">@Model.School.Name</h2>
+    <hr />
+    @for (int i = 0; i < 20; i++)
+    {
+        <br />
+    }
+    <h1 class="text-center">Třídní kniha</h1>
+    <h2 class="text-center">Třída: @Model.Class.Name</h2>
+    <h3 class="text-center">Školní rok: @Model.Classbook.SchoolYear</h3>
+    @for (int i = 0; i < 25; i++)
+    {
+        <br />
+    }
+    <div class="position-relative">
+        @* Signatures *@
+
+        <div class="d-inline">
+            @* Principal *@
+            <h4>Ředitel: @Model.Principal.FirstName @Model.Principal.LastName  ..................................</h4>
+        </div>
+        <br />
+        <br />
+        <div class="d-inline">
+            @* Class teacher *@
+            <h4>Třídní učitel: @Model.Class.ClassTeacher.FirstName @Model.Class.ClassTeacher.LastName ..................................</h4>
+        </div>
+
+    </div>
+
+    <div style="page-break-before: always;"></div>
+
+    @* List of inspections *@
+
+    @if (Model.Inspections.Count > 0)
+    {
+
+        @*<h3 class="text-center">Seznam hospitací</h3>*@
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="5" class="text-center">Seznam hospitací</th>
+                    </tr>
+                    <tr>
+                        <th colspan="1">Datum</th>
+                        <th colspan="1">Hospitující</th>
+                        <th colspan="1">Třída</th>
+                        <th colspan="1">Předmět</th>
+                        <th colspan="1">Učitel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Inspections)
+                    {
+                        <tr>
+                            <td>
+                                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Record.Created))
+                            </td>
+                            <td>
+                                @item.Auditor
+                            </td>
+                            <td>
+                                @item.Record.Classbook.Class.Name
+                            </td>
+                            <td>
+                                @item.Record.Subject.Code
+                            </td>
+                            <td>
+                                @item.Record.CreatedBy.FirstName @item.Record.CreatedBy.LastName
+                            </td>
+                        </tr>
+                        <tr class="border-top-0">
+                            <td colspan="5">
+                                @item.Text
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+    }
+
+    @* List of subjects *@
+
+    @if (Model.Subjects.Count > 0)
+    {
+
+        @*<h3 class="text-center">Seznam předmětů</h3>*@
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="text-center">Seznam předmětů</th>
+                    </tr>
+                    <tr>
+                        <th>Zkratka</th>
+                        <th>Předmět</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Subjects)
+                    {
+                        <tr>
+                            <td>
+                                @item.Code
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+    }
+
+    @* List of instructions *@
+    @if (Model.Instructions.Count > 0)
+    {
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Seznam poučení</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Instructions)
+                    {
+                        <tr>
+                            <td>
+                                @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Record.Created)) @item.Author.FirstName @item.Author.FirstName - @item.Record.Classbook.Class.Name
+                                <br />
+                                @item.Text
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+    }
+
+    @* List of students *@
+    @if (Model.Students.Count > 0)
+    {
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th colspan="5" class="text-center">Seznam studentů</th>
+                    </tr>
+                    <tr>
+                        <th colspan="1">Jméno</th>
+                        <th colspan="1">Příjmení</th>
+                        <th colspan="1">Email</th>
+                        <th colspan="1">Rodič</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Students)
+                    {
+                        <tr>
+                            <td>
+                                @item.FirstName
+                            </td>
+                            <td>
+                                @item.LastName
+                            </td>
+                            <td>
+                                @item.Email
+                            </td>
+                            <td>
+                                <ul>
+                                    @foreach (var parent in item.ParentStudents)
+                                    {
+                                        <li>@parent.Parent.FullName</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div style="page-break-before: always;"></div>
+
+    }
+
+    @* Classbook records *@
+
+    @foreach (var week in Model.Weeks)
+    {
+        <div>
+            <table class="table w-100">
+                <thead>
+                    <tr>
+                        <th>Týden @Convert.ToString(string.Format("{0:dd/MM}", week.Days.Select(x => x.Day).Min())) - @Convert.ToString(string.Format("{0:dd/MM}", week.Days.Select(x => x.Day).Max()))</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var day in week.Days)
+                    {
+                        <tr class="m-0 p-0">
+                            <td>
+                                <div>
+                                    <table class="table table-bordered w-100 m-0 p-0">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" class="text-center">@Convert.ToString(string.Format("{0:dd/MM}", day.Day.Date))</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                @if (day.Records.Count > 0)
+                                                {
+                                                    <td class="w-50">
+                                                        @* zaznamy *@
+                                                        <table class="table table-bordered">
+                                                            @foreach (var record in day.Records)
+                                                            {
+                                                                <tr>
+                                                                    <td>@record.SerialNumber.</td>
+                                                                    <td>@record.Subject.Code</td>
+                                                                    <td></td>
+                                                                    <td>@record.Topic</td>
+                                                                    <td>@record.CreatedBy.FirstName @record.CreatedBy.FirstName</td>
+                                                                </tr>
+                                                            }
+                                                        </table>
+                                                    </td>
+
+                                                    @if (day.StudentAbsence.Count > 0)
+                                                    {
+                                                        <td class="w-50">
+                                                            <table class="table table-bordered">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Jméno</th>
+                                                                        @{
+                                                                            int numberOfRecords = 0;
+                                                                            for (int i = 0; i < day.Records.Count; i++)
+                                                                            {
+                                                                                numberOfRecords++;
+                                                                                <th>
+                                                                                    @(i + 1).
+                                                                                </th>
+                                                                            }
+                                                                        }
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var stud in day.StudentAbsence.Keys)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>
+                                                                                @stud.FirstName @stud.LastName
+                                                                            </td>
+                                                                            @if (day.StudentAbsence[stud].Count > 0)
+                                                                            {
+
+                                                                                int j = 1;
+                                                                                foreach (var absence in day.StudentAbsence[stud])
+                                                                                {
+                                                                                    for (int i = j; i < absence.Record.SerialNumber; i++)
+                                                                                    {
+                                                                                        <td></td>
+                                                                                    }
+
+                                                                                    if (absence.IsExcused)
+                                                                                    {
+                                                                                        <td class="crossed"></td>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <td class="diagonalFalling"></td>
+                                                                                    }
+
+                                                                                    j = absence.Record.SerialNumber + 1;
+                                                                                }
+                                                                                for (int i = j; i <= numberOfRecords; i++)
+                                                                                {
+                                                                                    <td></td>
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+
+                                                                            }
+                                                                        </tr>
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="diagonalRising w-50"></td>
+
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <td height="150px" class="diagonalRising w-50"></td>
+                                                    <td height="150px" class="diagonalRising w-50"></td>
+                                                }
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        <div style="page-break-before: always;"></div>
+    }
+
+
+
+</body>
+
+</html>
+
+
+

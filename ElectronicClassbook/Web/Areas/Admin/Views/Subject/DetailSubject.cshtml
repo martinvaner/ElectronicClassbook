@@ -1,0 +1,50 @@
+﻿@model Web.Areas.Admin.Models.SubjectDetailViewModel
+
+@{
+    ViewData["Title"] = "Detail předmětu";
+    Layout = "_AdminLayout";
+}
+
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Detail předmětu</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="form-group col-md">
+                    <label asp-for="Code" class="control-label"></label>
+                    <label class="form-control">@Model.Code</label>
+                </div>
+                <div class="form-group col-md">
+                    <label asp-for="Name" class="control-label"></label>
+                    <label class="form-control">@Model.Name</label>
+                </div>
+
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Teachers, new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-6">
+                        <ul>
+                            @if (Model.Teachers.Count > 0)
+                            {
+                                @foreach (var teacher in Model.Teachers)
+                                {
+                                    <li>@teacher.LastName @teacher.FirstName (@teacher.Email)</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="Index">Zpět</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

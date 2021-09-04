@@ -1,0 +1,106 @@
+﻿@model Web.Areas.Admin.Models.StudentViewModel
+
+@{
+    ViewData["Title"] = "Přidat žáka";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Přidat nového žáka</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="AddStudent" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" type="password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg">
+                            <label asp-for="Address" class="control-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class=" row">
+                        <div class="form-group col-md">
+                            <label asp-for="PersonalIdentificationNumber" class="control-label"></label>
+                            <input asp-for="PersonalIdentificationNumber" class="form-control" />
+                            <span asp-validation-for="PersonalIdentificationNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md">
+                            @Html.LabelFor(model => model.Gender.GenderId, new { @class = "control-label" })
+                            <select class="form-control" asp-for="Gender.GenderId" asp-items="@(new SelectList(Model.Gender?.Genders, "Value", "Text"))">
+                                <option disabled selected></option>
+                            </select>
+                            <span asp-validation-for="Gender.GenderId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm">
+                            <label asp-for="DateOfBirth" class="control-label"></label>
+                            <input asp-for="DateOfBirth" class="form-control" type="date" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label asp-for="BirthLocation" class="control-label"></label>
+                            <input asp-for="BirthLocation" class="form-control" />
+                            <span asp-validation-for="BirthLocation" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label asp-for="Citizenship" class="control-label"></label>
+                            <input asp-for="Citizenship" class="form-control" />
+                            <span asp-validation-for="Citizenship" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label asp-for="EnrollmentDate" class="control-label"></label>
+                            <input asp-for="EnrollmentDate" class="form-control" type="date" />
+                            <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md">
+                            @Html.LabelFor(model => model.Parents.ParentsId, new { @class = "control-label" })
+                            <div class="col-sm-6">
+                                @Html.ListBoxFor(model => model.Parents.ParentsId, new MultiSelectList(Model.Parents?.Parents, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "ParentsDropdown" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group d-inline float-right">
+                            <input type="submit" value="Vytvořit žáka" class="btn btn-primary" />
+                        </div>
+                        <div class="d-inline">
+                            <a asp-action="StudentList">Zpět</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

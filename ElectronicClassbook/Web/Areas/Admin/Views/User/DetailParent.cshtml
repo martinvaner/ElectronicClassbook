@@ -1,0 +1,65 @@
+﻿@model Web.Areas.Admin.Models.ParentDetailViewModel
+
+@{
+    ViewData["Title"] = "Detail rodiče";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Detail rodiče</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <label class="form-control">@Model.FirstName</label>
+                    </div>
+                    <div class="form-group col-md">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <label class="form-control">@Model.LastName</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label asp-for="Email" class="control-label"></label>
+                        <label class="form-control">@Model.Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg">
+                        <label asp-for="Address" class="control-label"></label>
+                        <label class="form-control">@Model.Address</label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class="form-group col-md">
+                        <label asp-for="PhoneNumber" class="control-label"></label>
+                        <label class="form-control">@Model.PhoneNumber</label>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-md">
+                        @Html.LabelFor(model => model.Childrens, new { @class = "control-label" })
+                        <div class="col-sm-6">
+                            <ul>
+                                @foreach (var kid in Model.Childrens)
+                                {
+                                    <li>@kid.FullName</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="ParentList">Zpět</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

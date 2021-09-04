@@ -1,0 +1,98 @@
+﻿@model PaginatedList<Web.Areas.Classbook.Models.SchoolHomeNoteViewModel>
+
+@{
+    ViewData["Title"] = "Poznámky";
+    Layout = "_ClassbookLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Seznam poznámek</h5>
+            </div>
+
+            <div class="card-body">
+                @if (Model.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Vytvořeno
+                                    </th>
+                                    <th>
+                                        Žák
+                                    </th>
+                                    <th>
+                                        Vytvořil
+                                    </th>
+                                    <th>
+                                        Poznámka
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    @Html.HiddenFor(modelItem => item.Id)
+                                    <tr>
+                                        <td>
+                                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Created))
+                                        </td>
+                                        <td>
+                                            <label asp-for="@item.Student" class="control-label">@item.Student.LastName @item.Student.FirstName (@item.Student.Email)</label>
+                                        </td>
+                                        <td>
+                                            <label asp-for="@item.CreatedBy" class="control-label">@item.CreatedBy.LastName @item.CreatedBy.FirstName (@item.CreatedBy.Email)</label>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Note)
+                                        </td>
+                                        <td>
+                                            <div class="container">
+                                                <div class="btn-group blocks" role="button">
+                                                    <a class="btn btn-danger" asp-area="Classbook" asp-controller="Student" asp-action="DeleteSchoolHomeNote" asp-route-classbookId="@ViewBag.ClassbookId" asp-route-studentId="@item.Student.Id" asp-route-noteId="@item.Id">Odstranit</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+
+                    <a asp-action="ListSchoolHomeNote"
+                       asp-route-classbookId="@ViewBag.ClassbookId"
+                       asp-route-studentId="@ViewBag.StudentId"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @prevDisabled">
+                        Předchozí
+                    </a>
+                    <a asp-action="ListSchoolHomeNote"
+                       asp-route-classbookId="@ViewBag.ClassbookId"
+                       asp-route-studentId="@ViewBag.StudentId"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @nextDisabled">
+                        Další
+                    </a>
+                }
+                else
+                {
+                    <div>Žádné poznámky k zobrazení.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

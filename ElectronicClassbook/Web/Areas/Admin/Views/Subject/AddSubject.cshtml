@@ -1,0 +1,48 @@
+﻿@model Web.Areas.Admin.Models.SubjectViewModel
+
+@{
+    ViewData["Title"] = "Přidat předmět";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Přidat nový předmět</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="AddSubject">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Code" class="control-label"></label>
+                        <input asp-for="Code" class="form-control" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.Teachers.TeacherIds, new { @class = "col-sm-2 col-form-label" })
+                        <div class="col-sm-6">
+                            @Html.ListBoxFor(model => model.Teachers.TeacherIds, new MultiSelectList(Model.Teachers?.Teachers, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "SubjectsDropdown" })
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group d-inline float-right">
+                            <input type="submit" value="Vytvořit předmět" class="btn btn-primary" />
+                        </div>
+                        <div class="d-inline">
+                            <a asp-action="Index">Zpět</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

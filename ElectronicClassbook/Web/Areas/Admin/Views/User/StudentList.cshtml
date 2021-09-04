@@ -1,0 +1,106 @@
+﻿@model PaginatedList<Web.Areas.Admin.Models.UserViewModel>
+@{
+    ViewData["Title"] = "Uživatelé";
+    Layout = "_AdminLayout";
+}
+
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5 class="d-inline">Žáci</h5>
+
+                @* Add student *@
+                <div class="float-right d-inline">
+                    <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="AddStudent">Přidat žáka</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                @if (!string.IsNullOrEmpty(ViewBag.CurrentFilter) || Model.Count > 0)
+                {
+                    @* Search bar *@
+                    <div>
+                        <form class="form-inline" asp-action="StudentList" method="get">
+                            <div class="form-group mb-2">
+                                <label>Najít podle e-mailu: </label>
+                                <input type="text" name="searchText" class="form-control" value="@ViewBag.CurrentFilter" />
+                            </div>
+                            <button type="submit" class="btn btn-primary mb-2">Hledat</button>
+                            <a asp-action="StudentList">Odstranit filtr</a>
+                        </form>
+                    </div>
+                }
+                @if (Model.Count > 0)
+                {
+                    <div class="table-responsive">
+                        @* List of students *@
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> Jméno</th>
+                                    <th scope="col"> Příjmení</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FirstName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LastName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            <div class="container">
+                                                <div class="btn-group blocks" role="button">
+                                                    <a class="btn btn-primary" asp-area="Admin" asp-controller="User" asp-action="DetailStudent" asp-route-id="@item.Id">Detail</a>
+                                                    <a class="btn btn-success" asp-area="Admin" asp-controller="User" asp-action="EditStudent" asp-route-id="@item.Id">Edit</a>
+                                                    <a class="btn btn-danger" asp-area="Admin" asp-controller="User" asp-action="DeleteStudent" asp-route-id="@item.Id">Smazat</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+
+                    <a asp-action="StudentList"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex - 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @prevDisabled">
+                        Předchozí
+                    </a>
+                    <a asp-action="StudentList"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @nextDisabled">
+                        Další
+                    </a>
+                }
+                else
+                {
+                    <div>Žádní uživatelé k zobrazení.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,143 @@
+﻿@model Web.Areas.Reports.Models.AbsenceListViewModel
+
+@{
+    ViewData["Title"] = "Absence";
+    Layout = "_StudentDetailLayout";
+}
+
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Absence</h5>
+            </div>
+
+            <div class="card-body">
+                @if (Model.Absences.Count > 0)
+                {
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Datum
+                                    </th>
+                                    <th>
+                                        Počet absencí
+                                    </th>
+                                    <th>
+                                        Omluveno
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @for (int i = 0; i < Model.Absences.Count; i++)
+                                {
+                                    @Html.HiddenFor(x => Model.Absences[i])
+
+                                    <tr class="accordion-toggle">
+                                        <td>
+                                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.Absences[i].Date))
+                                            @Html.HiddenFor(x => Model.Absences[i].Date)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(x => Model.Absences[i].MissedClasses)
+                                        </td>
+                                        <td>
+                                            @if (Model.Absences[i].IsExcused)
+                                            {
+                                                <div>Ano</div>
+                                            }
+                                            else
+                                            {
+                                                <div>Ne</div>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target=".@String.Format("a" + @i)">Detail</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="accordian-body collapse @String.Format("a" + @i)">
+                                        <td colspan="4" class="hiddenRow">
+                                            <div>
+                                                <table class="table table-sm table-borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Hodina
+                                                            </th>
+                                                            <th>
+                                                                Zameškaný předmět
+                                                            </th>
+                                                            <th>Pozdní přichod</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @for (int j = 0; j < Model.Absences[i].Absences.Count; j++)
+
+                                                    {
+                                                        @Html.HiddenFor(x => Model.Absences[i].Absences[j])
+                                                        @Html.HiddenFor(x => Model.Absences[i].Absences[j].Id)
+
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    @Model.Absences[i].Absences[j].Record.SerialNumber
+                                                                </td>
+                                                                <td>
+                                                                    @Model.Absences[i].Absences[j].Record.Subject.Code
+                                                                </td>
+                                                                <td>
+                                                                    @if (!Model.Absences[i].Absences[j].Present && Model.Absences[i].Absences[j].LateArrival)
+                                                                    {
+                                                                        <div>Ano, @Model.Absences[i].Absences[j].AbsenceInterval minut</div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div>Ne</div>
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+
+                                                    }
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    var prevDisabled = !Model.Absences.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Absences.HasNextPage ? "disabled" : "";
+
+
+                    <a asp-action="ShowAbsences"
+                       asp-route-pageNumber="@(Model.Absences.PageIndex - 1)"
+                       class="btn btn-default @prevDisabled">
+                        Předchozí
+                    </a>
+                    <a asp-action="ShowAbsences"
+                       asp-route-pageNumber="@(Model.Absences.PageIndex + 1)"
+                       class="btn btn-default @nextDisabled">
+                        Další
+                    </a>
+                }
+                else
+                {
+                    <div>Žádné absence k zobrazení.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

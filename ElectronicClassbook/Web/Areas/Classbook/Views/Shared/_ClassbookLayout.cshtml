@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = "_Layout";
+}
+
+<h3>Třídní kniha - @ViewBag.ClassName</h3>
+<br />
+
+<div class="classbook container">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Classbook" asp-controller="Classbook" asp-action="Index" asp-route-id="@ViewBag.ClassbookId">Zápis</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Classbook" asp-controller="Inspection" asp-action="Index" asp-route-id="@ViewBag.ClassbookId">Hospitace</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Classbook" asp-controller="Instruction" asp-action="Index" asp-route-id="@ViewBag.ClassbookId">Poučení</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Classbook" asp-controller="Student" asp-action="Index" asp-route-id="@ViewBag.ClassbookId">Žáci</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Classbook" asp-controller="Classbook" asp-action="ShowHomeworks" asp-route-id="@ViewBag.ClassbookId">Domácí úkoly</a>
+        </li>
+    </ul>
+    <div role="main" class="pb-3">
+        @RenderBody()
+    </div>
+</div>

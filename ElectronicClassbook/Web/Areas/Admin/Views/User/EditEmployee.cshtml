@@ -1,0 +1,186 @@
+﻿@model Web.Areas.Admin.Models.EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Editovat zaměstnance";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Editovat zaměstnance</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="EditEmployee" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label asp-for="FirstName" class="control-label"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md">
+                            <label asp-for="LastName" class="control-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label asp-for="TitleBefore" class="control-label"></label>
+                            <input asp-for="TitleBefore" class="form-control" />
+                            <span asp-validation-for="TitleBefore" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md">
+                            <label asp-for="TitleAfter" class="control-label"></label>
+                            <input asp-for="TitleAfter" class="form-control" />
+                            <span asp-validation-for="TitleAfter" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label asp-for="Email" class="control-label"></label>
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg">
+                            <label asp-for="Address" class="control-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class=" row">
+                        <div class="form-group col-md">
+                            <label asp-for="PersonalIdentificationNumber" class="control-label"></label>
+                            <input asp-for="PersonalIdentificationNumber" class="form-control" />
+                            <span asp-validation-for="PersonalIdentificationNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md">
+                            @Html.LabelFor(model => model.Gender.GenderId, new { @class = "control-label" })
+                            <select class="form-control" asp-for="Gender.GenderId" asp-items="@(new SelectList(Model.Gender?.Genders, "Value", "Text"))">
+                                <option disabled selected></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm">
+                            <label asp-for="DateOfBirth" class="control-label"></label>
+                            <input asp-for="DateOfBirth" class="form-control" type="date" />
+                            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label asp-for="BirthLocation" class="control-label"></label>
+                            <input asp-for="BirthLocation" class="form-control" />
+                            <span asp-validation-for="BirthLocation" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label asp-for="Citizenship" class="control-label"></label>
+                            <input asp-for="Citizenship" class="form-control" />
+                            <span asp-validation-for="Citizenship" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm">
+                            @Html.LabelFor(model => model.UserRoles.RolesId, new { @class = "control-label" })
+                            <div class="col-sm-6">
+                                @Html.ListBoxFor(model => model.UserRoles.RolesId, new MultiSelectList(Model.UserRoles?.UserRoles, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "RolesDropdown" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Učitel</h6>
+                            <div>
+                                <div class="form-group">
+                                    <label asp-for="HireDate" class="control-label"></label>
+                                    <input asp-for="HireDate" class="form-control" type="date" />
+                                    <span asp-validation-for="HireDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.Subjects.SubjectsId, new { @class = "col-sm-6 col-form-label" })
+                                    <div class="col-sm-6">
+                                        @Html.ListBoxFor(model => model.Subjects.SubjectsId, new MultiSelectList(Model.Subjects?.Subjects, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "SubjectsDropdown" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Třídní učitel</h6>
+                            <div>
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.TeacherClass.ClassId, new { @class = "control-label" })
+                                    <select class="form-control" asp-for="TeacherClass.ClassId" asp-items="@(new SelectList(Model.TeacherClass?.Classes, "Value", "Text"))">
+                                        <option disabled selected></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @*<div id="accordion">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Učitel
+                                    </button>
+                                </h5>
+                            </div>
+
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label asp-for="HireDate" class="control-label"></label>
+                                        <input asp-for="HireDate" class="form-control" type="date" />
+                                        <span asp-validation-for="HireDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.Subjects.SubjectsId, new { @class = "col-sm-2 col-form-label" })
+                                        <div class="col-sm-6">
+                                            @Html.ListBoxFor(model => model.Subjects.SubjectsId, new MultiSelectList(Model.Subjects?.Subjects, "Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "SubjectsDropdown" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Třídní učitel
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        @Html.LabelFor(model => model.TeacherClass.ClassId, new { @class = "col-sm-2 col-form-label" })
+                                        <select class="form-control" asp-for="TeacherClass.ClassId" asp-items="@(new SelectList(Model.TeacherClass?.Classes, "Value", "Text"))">
+                                            <option disabled selected></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>*@
+                    <div>
+                        <div class="form-group d-inline float-right">
+                            <input type="submit" value="Potvrdit změny" class="btn btn-primary" />
+                        </div>
+                        <div class="d-inline">
+                            <a asp-action="EmployeeList">Zpět</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

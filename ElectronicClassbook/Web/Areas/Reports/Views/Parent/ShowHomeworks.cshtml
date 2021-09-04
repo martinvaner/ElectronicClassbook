@@ -1,0 +1,103 @@
+﻿@model Web.Areas.Reports.Models.HomeworkListViewModel
+
+@{
+    ViewData["Title"] = "Domácí úkoly";
+    Layout = "~/Areas/Reports/Views/Shared/Parent/_HomeworkLayout.cshtml";
+}
+
+
+
+<div class="report container">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Reports" asp-controller="Parent" asp-action="ShowHomeworks" asp-route-all="false" asp-route-id="@ViewBag.StudentId">Nové (@ViewBag.NewHomeworksCount)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Reports" asp-controller="Parent" asp-action="ShowHomeworks" asp-route-all="true" asp-route-id="@ViewBag.StudentId">Všechny</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Seznam domácích úkolů</h5>
+            </div>
+
+            <div class="card-body">
+                @if (Model.Homeworks.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Vypracovat do
+                                    </th>
+                                    <th>
+                                        Předmět
+                                    </th>
+                                    <th>
+                                        Název
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Homeworks)
+                                {
+                                    @Html.HiddenFor(modelItem => item.Id)
+                                    <tr>
+                                        <td>
+                                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Deadline))
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Record.Subject.Code)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Title)
+                                        </td>
+                                        <td>
+                                            <div class="container">
+                                                <div class="btn-group blocks" role="button">
+                                                    <a class="btn btn-primary" asp-area="Reports" asp-controller="Parent" asp-action="DetailHomework" asp-route-id="@ViewBag.StudentId" asp-route-homeworkId="@item.Id">Detail</a>
+                                                    @if (item.ShowParent)
+                                                    {
+                                                        <a class="btn btn-danger" asp-area="Reports" asp-controller="Parent" asp-action="HideHomework" asp-route-id="@ViewBag.StudentId" asp-route-homeworkId="@item.Id">Označit jako přečtené</a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    var prevDisabled = !Model.Homeworks.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Homeworks.HasNextPage ? "disabled" : "";
+
+
+                    <a asp-action="ShowHomeworks"
+                       asp-route-pageNumber="@(Model.Homeworks.PageIndex - 1)"
+                       class="btn btn-default @prevDisabled">
+                        Předchozí
+                    </a>
+                    <a asp-action="ShowHomeworks"
+                       asp-route-pageNumber="@(Model.Homeworks.PageIndex + 1)"
+                       class="btn btn-default @nextDisabled">
+                        Další
+                    </a>
+                }
+                else
+                {
+                    <div>Žádné domácí úkoly k zobrazení.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

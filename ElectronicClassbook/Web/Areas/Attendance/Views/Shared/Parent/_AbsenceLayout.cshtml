@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="kids container">
+    <ul class="nav nav-pills">
+        @foreach (var kid in ViewBag.Childrens)
+        {
+            @if (kid.Id == ViewBag.StudentId)
+            {
+                <li class="nav-item">
+                    <a class="nav-link active" asp-area="Attendance" asp-controller="Parent" asp-action="ShowAbsences" asp-route-id="@kid.Id">@kid.FirstName</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Attendance" asp-controller="Parent" asp-action="ShowAbsences" asp-route-id="@kid.Id">@kid.FirstName</a>
+                </li>
+            }
+        }
+    </ul>
+    <br />
+    <h3>Absence</h3>
+    <br />
+
+    <div role="main" class="pb-3">
+        @RenderBody()
+    </div>
+</div>

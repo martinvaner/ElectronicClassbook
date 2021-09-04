@@ -1,0 +1,55 @@
+﻿@model Web.Areas.Classbook.Models.ClassbookAddViewModel
+
+@{
+    ViewData["Title"] = "Přidat třídní knihu";
+}
+
+<h3>Třídní knihy</h3>
+<br />
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Přidat třídní knihu</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="AddClassbook">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Class.ClassId, new { @class = "control-label" })
+                            <select class="form-control" asp-for="Class.ClassId" asp-items="@(new SelectList(Model.Class?.Classes, "Value", "Text"))">
+                                <option disabled selected></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="SchoolYear" class="control-label"></label>
+                            <input asp-for="SchoolYear" class="form-control" />
+                            <span asp-validation-for="SchoolYear" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="IsActive" class="control-label"></label>
+                            <input asp-for="IsActive" class="form-control" />
+                        </div>
+                    </div>
+
+
+                        <div>
+                            <div class="form-group d-inline float-right">
+                                <input type="submit" value="Vytvořit třídní knihu" class="btn btn-primary" />
+                            </div>
+                            <div class="d-inline">
+                                <a asp-action="Index">Zpět</a>
+                            </div>
+                        </div>
+</form>
+            </div>
+        </div>
+    </div>
+</div>

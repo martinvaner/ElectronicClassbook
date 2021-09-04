@@ -1,0 +1,105 @@
+﻿@model Web.Areas.Reports.Models.SchoolHomeNoteListViewModel
+
+@{
+    ViewData["Title"] = "Poznámky";
+    Layout = "_Layout";
+}
+
+<h3>Poznámky o chování</h3>
+<br />
+
+<div class="report container">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Reports" asp-controller="Student" asp-action="ShowSchoolHomeNotes" asp-route-all="false" asp-route-id="@ViewBag.StudentId">Nové (@ViewBag.NewNotesCount)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Reports" asp-controller="Student" asp-action="ShowSchoolHomeNotes" asp-route-all="true" asp-route-id="@ViewBag.StudentId">Všechny</a>
+        </li>
+
+    </ul>
+</div>
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Seznam poznámek</h5>
+            </div>
+
+            <div class="card-body">
+                @if (Model.Notes.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Datum
+                                    </th>
+                                    <th>
+                                        Od
+                                    </th>
+                                    <th>
+                                        Poznámka
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Notes)
+                                {
+                                    @Html.HiddenFor(modelItem => item.Id)
+                                    <tr>
+                                        <td>
+                                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Created))
+                                        </td>
+                                        <td>
+                                            <label>@item.CreatedBy.LastName @item.CreatedBy.FirstName @item.CreatedBy.Email</label>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Note)
+                                        </td>
+                                        <td>
+                                            <div class="container">
+                                                <div class="btn-group blocks" role="button">
+                                                    @if (item.ShowStudent)
+                                                    {
+                                                        <a class="btn btn-danger" asp-area="Reports" asp-controller="Student" asp-action="HideSchoolHomeNote" asp-route-id="@ViewBag.StudentId" asp-route-noteId="@item.Id">Označit jako přečtené</a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    var prevDisabled = !Model.Notes.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Notes.HasNextPage ? "disabled" : "";
+
+
+                    <a asp-action="ShowSchoolHomeNotes"
+                       asp-route-pageNumber="@(Model.Notes.PageIndex - 1)"
+                       class="btn btn-default @prevDisabled">
+                        Předchozí
+                    </a>
+                    <a asp-action="ShowSchoolHomeNotes"
+                       asp-route-pageNumber="@(Model.Notes.PageIndex + 1)"
+                       class="btn btn-default @nextDisabled">
+                        Další
+                    </a>
+                }
+                else
+                {
+                    <div>Žádné poznámky k zobrazení.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

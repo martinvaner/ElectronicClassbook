@@ -1,0 +1,132 @@
+﻿@model Web.Areas.Reports.Models.AbsentNoteListViewModel
+
+@{
+    ViewData["Title"] = "ShowAbsentNotes";
+    Layout = "~/Areas/Reports/Views/Shared/Parent/_AbsentNoteLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Seznam omluvenek</h5>
+            </div>
+
+            <div class="card-body">
+                @if (Model.Notes.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Datum
+                                    </th>
+                                    <th>
+                                        Ve stavu
+                                    </th>
+                                    <th>
+                                        Omluvenka
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Notes.Count; i++)
+                                {
+                                    <tr class="accordion-toggle">
+                                        <td>
+                                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.Notes[i].Created))
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.Notes[i].State.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model.Notes[i].Text)
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn" data-toggle="collapse" data-target=".@String.Format("a" + @i)">Detail</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="accordian-body collapse @String.Format("a" + @i)">
+                                        <td colspan="4" class="hiddenRow">
+                                            <div>
+                                                <table class="table table-sm table-borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                Datum
+                                                            </th>
+                                                            <th>
+                                                                Hodina
+                                                            </th>
+                                                            <th>
+                                                                Zameškaný předmět
+                                                            </th>
+                                                            <th>Pozdní přichod</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @foreach (var item in Model.Notes[i].Absences)
+
+                                                    {
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.Record.Created))
+                                                                </td>
+                                                                <td>
+                                                                    @item.Record.SerialNumber
+                                                                </td>
+                                                                <td>
+                                                                    @item.Record.Subject.Code
+                                                                </td>
+                                                                <td>
+                                                                    @if (item.LateArrival)
+                                                                    {
+                                                                        <div>Ano, @item.AbsenceInterval minut</div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div>Ne</div>
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    }
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    var prevDisabled = !Model.Notes.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Notes.HasNextPage ? "disabled" : "";
+
+
+                    <a asp-action="ShowAbsentNotes"
+                       asp-route-pageNumber="@(Model.Notes.PageIndex - 1)"
+                       class="btn btn-default @prevDisabled">
+                        Předchozí
+                    </a>
+                    <a asp-action="ShowAbsentNotes"
+                       asp-route-pageNumber="@(Model.Notes.PageIndex + 1)"
+                       class="btn btn-default @nextDisabled">
+                        Další
+                    </a>
+                }
+                else
+                {
+                    <div>Žádné omluvenky k zobrazení.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<h3>Docházka</h3>
+<br />
+
+<div class="absence container">
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Attendance" asp-controller="ClassTeacher" asp-action="ShowAbsentNotes">Omluvenky k potvrzení</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Attendance" asp-controller="ClassTeacher" asp-action="ShowStudents">Absence</a>
+        </li>
+    </ul>
+
+    <div role="main" class="pb-3">
+        @RenderBody()
+    </div>
+</div>

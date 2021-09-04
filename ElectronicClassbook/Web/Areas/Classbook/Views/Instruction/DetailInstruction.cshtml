@@ -1,0 +1,46 @@
+﻿@model Web.Areas.Classbook.Models.InstructionDetailViewModel
+
+@{
+    ViewData["Title"] = "Detail poučení";
+    Layout = "_ClassbookLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Detail poučení</h5>
+            </div>
+
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Title" class="control-label"></label>
+                        <label class="form-control">@Model.Title</label>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Author" class="control-label"></label>
+                        <input disabled value="@Model.Author.LastName @Model.Author.FirstName (@Model.Author.Email)" asp-for="Author" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Date" class="control-label"></label>
+                        <input disabled="disabled" type="date" value="@Model.Date.ToString("yyyy-MM-dd")" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label asp-for="Text" class="control-label"></label>
+                        <textarea disabled="disabled" asp-for="Text" class="form-control" rows="10">@Model.Text</textarea>
+                        <span asp-validation-for="Text" class="text-danger"></span>
+                    </div>
+                </div>
+                <div>
+                    <a asp-action="Index" asp-route-id="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date">Zpět</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

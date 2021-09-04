@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Web.Areas.Classbook.Models.RecordListViewModel>
+
+@{
+    ViewData["Title"] = "Třídní kniha";
+    Layout = "_ClassbookLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Zápis</h5>
+            </div>
+
+            <div class="card-body">
+                <div>
+                    <form class="form-inline" asp-action="Index" method="post">
+                        <div class="form-group">
+                            <input hidden="hidden" name="id" value="@ViewBag.ClassbookId" />
+                            <input type="date" name="date" value="@ViewBag.Date" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Zobrazit</button>
+                    </form>
+                </div>
+
+                <div class="table-responsive table-responsive-overflow-inherit">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.SerialNumber)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Subject)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Topic)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SerialNumber)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Subject.Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Topic)
+                                    </td>
+                                    <td>
+                                        <div class="container">
+                                            <div class="btn-group blocks" role="button">
+                                                <a class="btn btn-primary" asp-area="Classbook" asp-controller="Classbook" asp-action="AddAttendance" asp-route-classbookId="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date" asp-route-recordId="@item.Id">Absence</a>
+                                                <div class="dropdown d-inline">
+                                                    <button class="btn btn-secondary dropdown-toggle" data-boundary="viewport" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                                                        Další
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <div class="container">
+                                                            @if (User.IsInRole("Ředitel") || User.IsInRole("Zástupce ředitele"))
+                                                            {
+                                                                <a class="dropdown-item" asp-area="Classbook" asp-controller="Classbook" asp-action="AddInspection" asp-route-classbookId="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date" asp-route-recordId="@item.Id">Přidat hospitaci</a>
+                                                            }
+                                                            <a class="dropdown-item" asp-area="Classbook" asp-controller="Classbook" asp-action="AddInstruction" asp-route-classbookId="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date" asp-route-recordId="@item.Id">Přidat poučení</a>
+                                                            @if (User.IsInRole("Učitel"))
+                                                            {
+                                                                <a class="dropdown-item" asp-area="Classbook" asp-controller="Classbook" asp-action="AddHomework" asp-route-classbookId="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date" asp-route-recordId="@item.Id">Přidat domácí úkol</a>
+
+                                                                <a class="dropdown-item" asp-area="Classbook" asp-controller="Classbook" asp-action="UpdateSubstitution" asp-route-classbookId="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date" asp-route-recordId="@item.Id">
+                                                                    Označit hodinu jako suplovanou
+                                                                    @if (item.IsSubstituted)
+                                                                    {
+                                                                        <i class="fas fa-check"></i>
+                                                                    }
+                                                                </a>
+                                                            }
+                                                            <a class="dropdown-item" asp-area="Classbook" asp-controller="Classbook" asp-action="EditRecord" asp-route-classbookId="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date" asp-route-recordId="@item.Id">Upravit záznam</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @if (User.IsInRole("Učitel"))
+                {
+                    <div>
+                        <a class="btn btn-primary btn-lg btn-block" asp-area="Classbook" asp-controller="Classbook" asp-action="AddRecord" asp-route-classbookId="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date">Zapsat hodinu</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

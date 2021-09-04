@@ -1,0 +1,65 @@
+﻿@model Web.Areas.Classbook.Models.SchoolHomeNoteViewModel
+
+@{
+    ViewData["Title"] = "Napsat poznámku";
+    Layout = "_ClassbookLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Napsat novou poznámku</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="CreateSchoolHomeNote" method="post">
+                    @Html.HiddenFor(m => m.Student.Email)
+                    @Html.HiddenFor(m => m.Student.FirstName)
+                    @Html.HiddenFor(m => m.Student.LastName)
+                    @Html.HiddenFor(m => m.Student.Id)
+                    @Html.HiddenFor(m => m.CreatedBy.Email)
+                    @Html.HiddenFor(m => m.CreatedBy.FirstName)
+                    @Html.HiddenFor(m => m.CreatedBy.LastName)
+                    @Html.HiddenFor(m => m.CreatedBy.Id)
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Student" class="control-label"></label>
+                            <input disabled="disabled" asp-for="Student" value="@Model.Student.LastName @Model.Student.FirstName (@Model.Student.Email) " class="form-control" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="CreatedBy" class="control-label"></label>
+                            <input disabled="disabled" asp-for="CreatedBy" value="@Model.CreatedBy.LastName @Model.CreatedBy.FirstName (@Model.CreatedBy.Email) " class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Created" class="control-label"></label>
+                            <input type="date" asp-for="Created" value="@Model.Created.ToString("yyyy-MM-dd")" class="form-control" />
+                            @*<span asp-validation-for="Created" class="text-danger"></span>*@
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label asp-for="Note" class="control-label"></label>
+                            <textarea asp-for="Note" class="form-control" rows="10"></textarea>
+                            <span asp-validation-for="Note" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group d-inline float-right">
+                            <input type="submit" value="Vytvořit poznámku" class="btn btn-primary" />
+                        </div>
+                        <div class="d-inline">
+                            <a asp-action="Index" asp-route-id="@ViewBag.ClassbookId">Zpět</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

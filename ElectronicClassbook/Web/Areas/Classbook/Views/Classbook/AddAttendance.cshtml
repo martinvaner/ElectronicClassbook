@@ -1,0 +1,74 @@
+﻿@model Web.Areas.Classbook.Models.AttendanceViewModel
+
+@{
+    ViewData["Title"] = "Přidat docházku";
+    Layout = "_ClassbookLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Docházka</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="AddAttendance" method="post">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Žák</th>
+                                    <th scope="col">Přítomnost</th>
+                                    <th scope="col">Pozní příchod</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @for (int i = 0; i < Model.StudentAttendances.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Model.StudentAttendances[i].Student.LastName @Model.StudentAttendances[i].Student.FirstName (@Model.StudentAttendances[i].Student.Email)
+                                        </td>
+                                        <td>
+                                            <select class="form-control" asp-for="@Model.StudentAttendances[i].Attendace.AttendanceId" asp-items="@(new SelectList(Model.StudentAttendances[i].Attendace.Attendances, "Value", "Text"))">
+                                                <option disabled selected></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label asp-for="StudentAttendances[i].AbsenceInterval" class="control-label"></label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input asp-for="StudentAttendances[i].AbsenceInterval" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    @Html.HiddenFor(x => x.StudentAttendances[i].Student.Id)
+                                    @Html.HiddenFor(x => x.StudentAttendances[i].Student.Email)
+                                    @Html.HiddenFor(x => x.StudentAttendances[i].Attendace.AttendanceId)
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="form-group d-inline float-right">
+                            <input type="submit" value="Potvrdit" class="btn btn-primary" />
+                        </div>
+                        <div class="d-inline">
+                            <a asp-action="Index" asp-route-id="@ViewBag.ClassbookId" asp-route-date="@ViewBag.Date">Zpět</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

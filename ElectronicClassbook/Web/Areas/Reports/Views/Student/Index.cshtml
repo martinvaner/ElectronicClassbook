@@ -1,0 +1,76 @@
+﻿@model Web.Areas.Reports.Models.StudentReportViewModel
+
+@{
+    ViewData["Title"] = "Rychlý přehled";
+    Layout = "_Layout";
+}
+
+<h3>Rychlý přehled</h3>
+<br />
+
+
+<div class="col-md-12 grid-margin">
+    <div class="card">
+        <div class="p-4 border-bottom bg-light">
+            <h5>@Model.FirstName @Model.LastName</h5>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    @* absence *@
+                    <h6>Absence (@Model.Absences.Count)</h6>
+                    @if (Model.Absences.Count > 0)
+                    {
+                    <ul>
+                        @foreach (var a in Model.Absences)
+                        {
+                            <li>@a.Record.Created.ToString("dd/MM/yyyy") @a.Record.Subject.Code</li>
+                        }
+                    </ul>
+                    }
+                    else
+                    {
+                        <div>Žádné nové absence.</div>
+                    }
+                </div>
+
+                <div class="col-md-4">
+                    @* homeworks *@
+                    <h6>Domácí úkoly (@Model.Homeworks.Count)</h6>
+                    @if (Model.Homeworks.Count > 0)
+                    {
+                    <ul>
+                        @foreach (var hw in Model.Homeworks)
+                        {
+                            <li>@hw.Deadline.ToString("dd/MM/yyyy") @hw.Title</li>
+                        }
+                    </ul>
+                    }
+                    else
+                    {
+                        <div>Žádné domácí úkoly.</div>
+                    }
+                </div>
+
+                <div class="col-md-4">
+                    <h6>Poznámky (@Model.Notes.Count)</h6>
+                    @if (Model.Notes.Count > 0)
+                    {
+                    <ul>
+                        @foreach (var note in Model.Notes)
+                        {
+                            <li>@note.Created.ToString("dd/MM/yyyy") @note.Note</li>
+                        }
+                    </ul>
+                    }
+                    else
+                    {
+                        <div>Žádné nové poznámky.</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

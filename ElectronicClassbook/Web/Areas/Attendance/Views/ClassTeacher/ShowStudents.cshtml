@@ -1,0 +1,84 @@
+﻿@model Web.Areas.Attendance.Models.StudentAbsenceListViewModel
+
+@{
+    ViewData["Title"] = "Absence";
+    Layout = "~/Areas/Attendance/Views/Shared/ClassTeacher/_AbsenceLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Absence</h5>
+            </div>
+
+            <div class="card-body">
+                @if (Model.Students.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"> Jméno</th>
+                                    <th scope="col"> Příjmení</th>
+                                    <th scope="col">E-mail</th>
+                                    <th scope="col">Počet absencí</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Students)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Student.FirstName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Student.LastName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Student.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AbsencesCount)
+                                        </td>
+                                        <td>
+                                            <div class="container">
+                                                <div class="btn-group blocks" role="button">
+                                                    <a class="btn btn-primary" asp-area="Attendance" asp-controller="ClassTeacher" asp-action="ShowStudentAbsences" asp-route-studentId="@item.Student.Id">Detail</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    var prevDisabled = !Model.Students.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Students.HasNextPage ? "disabled" : "";
+
+
+                    <a asp-action="ShowStudents"
+                       asp-route-pageNumber="@(Model.Students.PageIndex - 1)"
+                       class="btn btn-default @prevDisabled">
+                        Předchozí
+                    </a>
+                    <a asp-action="ShowStudents"
+                       asp-route-pageNumber="@(Model.Students.PageIndex + 1)"
+                       class="btn btn-default @nextDisabled">
+                        Další
+                    </a>
+
+                }
+                else
+                {
+                    <div>Žádní žáci k zobrazení.</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

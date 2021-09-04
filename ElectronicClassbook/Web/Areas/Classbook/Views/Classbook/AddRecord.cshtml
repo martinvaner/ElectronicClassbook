@@ -1,0 +1,67 @@
+﻿@model Web.Areas.Classbook.Models.RecordAddViewModel
+
+@{
+    ViewData["Title"] = "Přidat záznam";
+    Layout = "_ClassbookLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Přidat nový záznam</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="AddRecord" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    @Html.HiddenFor(model => model.Classbook.Id)
+                    @Html.HiddenFor(model => model.CreatedBy.Email)
+                    @Html.HiddenFor(model => model.CreatedBy.FirstName)
+                    @Html.HiddenFor(model => model.CreatedBy.LastName)
+                    @Html.HiddenFor(model => model.Created)
+
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label asp-for="SerialNumber" class="control-label"></label>
+                            <input asp-for="SerialNumber" class="form-control" />
+                            <span asp-validation-for="SerialNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md">
+                            @Html.LabelFor(model => model.Subject.SubjectId, new { @class = "control-label" })
+                            <select class="form-control" asp-for="Subject.SubjectId" asp-items="@(new SelectList(Model.Subject?.Subjects, "Value", "Text"))">
+                                <option disabled selected></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg">
+                            <label asp-for="Topic" class="control-label"></label>
+                            <input asp-for="Topic" class="form-control" />
+                            <span asp-validation-for="Topic" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md">
+                            <label asp-for="Created" class="control-label"></label>
+                            <input disabled="disabled" asp-for="Created" value="@Model.Created.ToString("yyyy-MM-dd")" type="date" class="form-control" />
+                        </div>
+                        <div class="form-group col-md">
+                            <label asp-for="CreatedBy" class="control-label"></label>
+                            <input disabled="disabled" asp-for="CreatedBy" class="form-control" value="@Model.CreatedBy.LastName @Model.CreatedBy.FirstName (@Model.CreatedBy.Email)" />
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group d-inline float-right">
+                            <input type="submit" value="Vytvořit záznam" class="btn btn-primary" />
+                        </div>
+                        <div class="d-inline">
+                            <a asp-area="Classbook" asp-controller="Classbook" asp-action="Index" asp-route-id="@Model.Classbook.Id" asp-route-date="@Model.Created.ToString("yyyy-MM-dd")">Zpět</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

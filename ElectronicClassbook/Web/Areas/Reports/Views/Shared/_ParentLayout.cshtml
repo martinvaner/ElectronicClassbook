@@ -1,0 +1,23 @@
+﻿@model Web.Areas.Reports.Models.ParentBaseViewModel
+@*
+    zobrazit jména dětí -> odkazy
+    TODO: asi smazat
+*@
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <ul class="nav nav-pills">
+        @foreach (var kid in Model.Childrens)
+        {
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Reports" asp-controller="Parent" asp-action="Index" asp-route-id="@ViewBag.ClassbookId">Zápis</a>
+        </li>
+        }
+    </ul>
+    <div role="main" class="pb-3">
+        @RenderBody()
+    </div>
+</div>

@@ -1,0 +1,99 @@
+﻿@model Web.Areas.Admin.Models.StudentDetailViewModel
+
+@{
+    ViewData["Title"] = "Detail žáka";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Detail žáka</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <label class="form-control">@Model.FirstName</label>
+                    </div>
+                    <div class="form-group col-md">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <label class="form-control">@Model.LastName</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label asp-for="Email" class="control-label"></label>
+                        <label class="form-control">@Model.Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg">
+                        <label asp-for="Address" class="control-label"></label>
+                        <label class="form-control">@Model.Address</label>
+                    </div>
+                </div>
+                <div class=" row">
+                    <div class="form-group col-md">
+                        <label asp-for="PersonalIdentificationNumber" class="control-label"></label>
+                        <label class="form-control">@Model.PersonalIdentificationNumber</label>
+                    </div>
+                    <div class="form-group col-md">
+                        <label asp-for="Gender" class="control-label"></label>
+                        @if (Model.Gender != null)
+                        {
+                            @if (Model.Gender.Value)
+                            {
+                                <label class="form-control">Muž</label>
+                            }
+                            else
+                            {
+                                <label class="form-control">Žena</label>
+                            }
+                        }
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm">
+                        <label asp-for="DateOfBirth" class="control-label"></label>
+                        <input type="date" disabled class="form-control" value="@Model.DateOfBirth.Value.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="form-group col-sm">
+                        <label asp-for="BirthLocation" class="control-label"></label>
+                        <label class="form-control">@Model.BirthLocation</label>
+                    </div>
+                    <div class="form-group col-sm">
+                        <label asp-for="Citizenship" class="control-label"></label>
+                        <label class="form-control">@Model.Citizenship</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md">
+                        <label asp-for="EnrollmentDate" class="control-label"></label>
+                        <input type="date" disabled class="form-control" value="@Model.EnrollmentDate.ToString("yyyy-MM-dd")" />
+                    </div>
+                    <div class="form-group col-md">
+                        @Html.LabelFor(model => model.Parents, new { @class = "control-label" })
+                        <div class="col-sm-12">
+                            <ul>
+                                @foreach (var parent in Model.Parents)
+                                {
+                                    <li>@parent.FullName</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="StudentList">Zpět</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

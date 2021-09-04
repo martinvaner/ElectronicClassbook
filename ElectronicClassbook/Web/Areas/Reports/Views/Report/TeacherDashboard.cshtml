@@ -1,0 +1,125 @@
+﻿@model Web.Areas.Reports.Models.TeacherReportViewModel
+
+@{
+    ViewData["Title"] = "Rychlý přehled";
+    Layout = "_Layout";
+}
+
+<h3>Rychlý přehled</h3>
+<br />
+
+<div class="row">
+
+    <div class="col-md-12 grid-margin">
+
+        <div class="card">
+            <div class="card-body">
+                <h4>Připomínka domácích úkolů</h4>
+                <hr />
+                @if (Model.Homeworks.Count > 0)
+                {
+
+                    <table class="table table-sm table-borderless">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Do
+                                </th>
+                                <th>
+                                    Třída
+                                </th>
+                                <th>
+                                    Název
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Homeworks.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Convert.ToString(string.Format("{0:dd/MM/yyyy}", Model.Homeworks[i].Deadline))
+                                    </td>
+                                    <td>
+                                        @Model.Homeworks[i].Record.Classbook.Class.Name
+                                    </td>
+                                    <td>
+                                        @Model.Homeworks[i].Title
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn" data-toggle="collapse" data-target=".@String.Format("a" + @i)">Detail</button>
+                                    </td>
+                                </tr>
+                                <tr class="accordian-body collapse @String.Format("a" + @i)">
+                                    <td colspan="4" class="hiddenRow">
+                                        <div class="border">
+                                            @Model.Homeworks[i].Text
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div>Žádné připomínky domácích úkolů.</div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@if (User.IsInRole("Třídní učitel"))
+{
+
+<div class="row">
+
+    <div class="col-md-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Omluvenky k potvrzení</h4>
+                    <hr />
+                    @if (Model.AbsentNotes.Count > 0)
+                    {
+
+                        <table class="table table-sm table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Posláno
+                                    </th>
+                                    <th>
+                                        Student
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var note in Model.AbsentNotes)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Convert.ToString(string.Format("{0:dd/MM/yyyy}", note.Created))
+                                        </td>
+                                        <td>
+                                            @note.Student.FullName
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <div>Žádné omluvenky k potvrzení.</div>
+                    }
+                </div>
+            </div>
+    </div>
+</div>
+  }
+

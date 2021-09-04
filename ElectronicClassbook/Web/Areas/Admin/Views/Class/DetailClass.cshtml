@@ -1,0 +1,70 @@
+﻿@model Web.Areas.Admin.Models.ClassDetailViewModel
+
+@{
+    ViewData["Title"] = "Detail třídy";
+    Layout = "_AdminLayout";
+}
+
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Detail třídy</h5>
+            </div>
+
+            <div class="card-body">
+                <div class="form-group col-md">
+                    <label asp-for="Name" class="control-label"></label>
+                    <label class="form-control">@Model.Name</label>
+                </div>
+
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.ClassTeacher, new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-6">
+                        @if (Model.ClassTeacher != null)
+                        {
+                            <p>@Model.ClassTeacher?.LastName @Model.ClassTeacher?.FirstName (@Model.ClassTeacher?.Email)</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Students, new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-6">
+                        <ul>
+                            @if (Model.Students.Count > 0)
+                            {
+                                @foreach (var student in Model.Students)
+                                {
+                                    <li>@student.LastName @student.FirstName (@student.Email)</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Subjects, new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-6">
+                        <ul>
+                            @if (Model.Subjects.Count > 0)
+                            {
+                                @foreach (var subject in Model.Subjects)
+                                {
+                                    <li>@subject.Code - @subject.Name</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="Index">Zpět</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

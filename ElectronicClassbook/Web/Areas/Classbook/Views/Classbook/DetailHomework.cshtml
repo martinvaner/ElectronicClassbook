@@ -1,0 +1,46 @@
+﻿@model Web.Areas.Classbook.Models.HomeworkDetailViewModel
+
+@{
+    ViewData["Title"] = "Detail úkolu";
+    Layout = "_ClassbookLayout";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Detail domácího úkolu</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Homework.Title" class="control-label">Název</label>
+                        <label asp-for="Homework.Title" class="form-control">@Model.Homework.Title</label>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Homework.Deadline" class="control-label">Vypracovat do</label>
+                        <input disabled="disabled" type="date" value="@Model.Homework.Deadline.ToString("yyyy-MM-dd")" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Homework.Record.Subject.Code" class="control-label">Předmět</label>
+                        <label class="form-control">@Model.Homework.Record.Subject.Code</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label asp-for="Homework.Text" class="control-label">Zadání</label>
+                        <textarea disabled="disabled" asp-for="Homework.Text" class="form-control" rows="10">@Model.Homework.Text</textarea>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="ShowHomeworks" asp-route-id="@ViewBag.ClassbookId">Zpět</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

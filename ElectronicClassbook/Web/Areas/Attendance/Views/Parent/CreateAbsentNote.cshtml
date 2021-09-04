@@ -1,0 +1,51 @@
+﻿@model Web.Areas.Attendance.Models.AbsentNoteViewModel
+
+@{
+    ViewData["Title"] = "Nová omluvenka";
+    Layout = "~/Areas/Attendance/Views/Shared/Parent/_AbsenceLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 grid-margin">
+        <div class="card">
+            <div class="p-4 border-bottom bg-light">
+                <h5>Nová omluvenka</h5>
+            </div>
+
+            <div class="card-body">
+                <form asp-action="SendAbsentNote" asp-route-studentId="@ViewBag.StudentId" method="post">
+                    @for (int i = 0; i < Model.Absences.Count; i++)
+                    {
+                        @Html.HiddenFor(x => Model.Absences[i])
+                        @Html.HiddenFor(x => Model.Absences[i].Id)
+
+                    }
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <textarea asp-for="Text" class="form-control" rows="10"></textarea>
+                            <span asp-validation-for="Text" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group d-inline float-right">
+                            @if (Model.Absences.Count > 0)
+                            {
+                                <button type="submit" class="btn btn-primary">Odeslat omluvenku</button>
+                            }
+                            else
+                            {
+                                <button disabled type="submit" class="btn btn-primary">Odeslat omluvenku</button>
+                            }
+                        </div>
+                        <div class="d-inline">
+                            <a asp-action="ShowAbsences" asp-route-id="@ViewBag.StudentId">Zpět</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
