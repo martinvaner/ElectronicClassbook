@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess.Repository.Interfaces
 {
-	public interface IBaseRepository : IDisposable
+	public interface IBaseRepository
 	{
 		/// <summary>
 		/// Gets User by its email.

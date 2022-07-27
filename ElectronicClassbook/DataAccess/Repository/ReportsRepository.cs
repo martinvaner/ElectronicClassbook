@@ -12,28 +12,11 @@ namespace DataAccess.Repository
 	{
 
 		private readonly EClassbookDbContext dbContext;
-		private bool disposed = false;
 
 		public ReportsRepository(EClassbookDbContext dbContext)
 		{
 			this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!this.disposed && disposing)
-			{
-				dbContext.Dispose();
-			}
-			this.disposed = true;
-		}
-
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
 
 		public Parent GetParentByEmail(string email)
 		{

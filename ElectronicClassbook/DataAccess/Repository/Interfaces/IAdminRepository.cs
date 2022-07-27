@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Repository.Interfaces
 {
-	public interface IAdminRepository : IDisposable
+	public interface IAdminRepository
 	{
 		/// <summary>
 		/// Gets all users from database

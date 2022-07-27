@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Repository.Interfaces
 {
-	public interface IAttendanceRepository : IDisposable
+	public interface IAttendanceRepository
 	{
 		/// <summary>
 		/// Get parent by email

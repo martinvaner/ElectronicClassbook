@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Repository.Interfaces
 {
-	public interface IClassbookRepository : IDisposable
+	public interface IClassbookRepository
 	{
 
 		/// <summary>
